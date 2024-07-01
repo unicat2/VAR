@@ -23,7 +23,7 @@ import dist
 
 
 class Args(Tap):
-    data_path: str = '/path/to/imagenet'
+    data_path: str = './data/imagenet'
     exp_name: str = 'text'
     
     # VAE
@@ -82,9 +82,9 @@ class Args(Tap):
     
     # would be automatically set in runtime
     cmd: str = ' '.join(sys.argv[1:])  # [automatically set; don't specify this]
-    branch: str = subprocess.check_output(f'git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]' # [automatically set; don't specify this]
-    commit_id: str = subprocess.check_output(f'git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]'  # [automatically set; don't specify this]
-    commit_msg: str = (subprocess.check_output(f'git log -1', shell=True).decode('utf-8').strip().splitlines() or ['[unknown]'])[-1].strip()    # [automatically set; don't specify this]
+    # branch: str = subprocess.check_output(f'git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]' # [automatically set; don't specify this]
+    # commit_id: str = subprocess.check_output(f'git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]'  # [automatically set; don't specify this]
+    # commit_msg: str = (subprocess.check_output(f'git log -1', shell=True).decode('utf-8').strip().splitlines() or ['[unknown]'])[-1].strip()    # [automatically set; don't specify this]
     acc_mean: float = None      # [automatically set; don't specify this]
     acc_tail: float = None      # [automatically set; don't specify this]
     L_mean: float = None        # [automatically set; don't specify this]
@@ -220,8 +220,8 @@ def init_dist_and_get_args():
         args.pg = 0.8
         args.pg0 = 1
     else:
-        if args.data_path == '/path/to/imagenet':
-            raise ValueError(f'{"*"*40}  please specify --data_path=/path/to/imagenet  {"*"*40}')
+        if args.data_path == '/path/to/data':
+            raise ValueError(f'{"*"*40}  please specify --data_path=/path/to/data  {"*"*40}')
     
     # warn args.extra_args
     if len(args.extra_args) > 0:
