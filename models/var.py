@@ -132,7 +132,7 @@ class VAR(nn.Module):
         """
         only used for inference, on autoregressive mode
         :param B: batch size
-        :param label_B: imagenet label; if None, randomly sampled
+        :param label_B: data label; if None, randomly sampled
         :param g_seed: random seed
         :param cfg: classifier-free guidance ratio
         :param top_k: top-k sampling
