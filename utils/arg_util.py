@@ -80,11 +80,25 @@ class Args(Tap):
     pg0: int = 4            # progressive initial stage, 0: from the 1st token map, 1: from the 2nd token map, etc
     pgwp: float = 0         # num of warmup epochs at each progressive stage
     
-    # would be automatically set in runtime
-    cmd: str = ' '.join(sys.argv[1:])  # [automatically set; don't specify this]
+    # # would be automatically set in runtime
+    # cmd: str = ' '.join(sys.argv[1:])  # [automatically set; don't specify this]
     # branch: str = subprocess.check_output(f'git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]' # [automatically set; don't specify this]
     # commit_id: str = subprocess.check_output(f'git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]'  # [automatically set; don't specify this]
     # commit_msg: str = (subprocess.check_output(f'git log -1', shell=True).decode('utf-8').strip().splitlines() or ['[unknown]'])[-1].strip()    # [automatically set; don't specify this]
+    cmd: str = ' '.join(sys.argv[1:])  # [automatically set; don't specify this]
+    try:
+        branch: str = subprocess.check_output('git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]' # [automatically set; don't specify this]
+    except subprocess.CalledProcessError:
+        branch: str = '[unknown]'
+    try:
+        commit_id: str = subprocess.check_output('git rev-parse HEAD', shell=True).decode('utf-8').strip() or '[unknown]'  # [automatically set; don't specify this]
+    except subprocess.CalledProcessError:
+        commit_id: str = '[unknown]'
+    try:
+        commit_msg: str = (subprocess.check_output('git log -1', shell=True).decode('utf-8').strip().splitlines() or ['[unknown]'])[-1].strip()    # [automatically set; don't specify this]
+    except subprocess.CalledProcessError:
+        commit_msg: str = '[unknown]'
+
     acc_mean: float = None      # [automatically set; don't specify this]
     acc_tail: float = None      # [automatically set; don't specify this]
     L_mean: float = None        # [automatically set; don't specify this]
